@@ -20,23 +20,6 @@ export type PrismaPromise<T> = $Public.PrismaPromise<T>
 export type User = $Result.DefaultSelection<Prisma.$UserPayload>
 
 /**
- * Enums
- */
-export namespace $Enums {
-  export const GeneralStatus: {
-  ACTIVE: 'ACTIVE',
-  INACTIVE: 'INACTIVE'
-};
-
-export type GeneralStatus = (typeof GeneralStatus)[keyof typeof GeneralStatus]
-
-}
-
-export type GeneralStatus = $Enums.GeneralStatus
-
-export const GeneralStatus: typeof $Enums.GeneralStatus
-
-/**
  * ##  Prisma Client ʲˢ
  *
  * Type-safe database client for TypeScript & Node.js
@@ -906,7 +889,7 @@ export namespace Prisma {
     updated_at: Date | null
     created_by: string | null
     updated_by: string | null
-    status: $Enums.GeneralStatus | null
+    is_deleted: boolean | null
   }
 
   export type UserMaxAggregateOutputType = {
@@ -919,7 +902,7 @@ export namespace Prisma {
     updated_at: Date | null
     created_by: string | null
     updated_by: string | null
-    status: $Enums.GeneralStatus | null
+    is_deleted: boolean | null
   }
 
   export type UserCountAggregateOutputType = {
@@ -932,7 +915,7 @@ export namespace Prisma {
     updated_at: number
     created_by: number
     updated_by: number
-    status: number
+    is_deleted: number
     _all: number
   }
 
@@ -947,7 +930,7 @@ export namespace Prisma {
     updated_at?: true
     created_by?: true
     updated_by?: true
-    status?: true
+    is_deleted?: true
   }
 
   export type UserMaxAggregateInputType = {
@@ -960,7 +943,7 @@ export namespace Prisma {
     updated_at?: true
     created_by?: true
     updated_by?: true
-    status?: true
+    is_deleted?: true
   }
 
   export type UserCountAggregateInputType = {
@@ -973,7 +956,7 @@ export namespace Prisma {
     updated_at?: true
     created_by?: true
     updated_by?: true
-    status?: true
+    is_deleted?: true
     _all?: true
   }
 
@@ -1059,7 +1042,7 @@ export namespace Prisma {
     updated_at: Date | null
     created_by: string | null
     updated_by: string | null
-    status: $Enums.GeneralStatus
+    is_deleted: boolean
     _count: UserCountAggregateOutputType | null
     _min: UserMinAggregateOutputType | null
     _max: UserMaxAggregateOutputType | null
@@ -1089,7 +1072,7 @@ export namespace Prisma {
     updated_at?: boolean
     created_by?: boolean
     updated_by?: boolean
-    status?: boolean
+    is_deleted?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -1102,7 +1085,7 @@ export namespace Prisma {
     updated_at?: boolean
     created_by?: boolean
     updated_by?: boolean
-    status?: boolean
+    is_deleted?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -1115,7 +1098,7 @@ export namespace Prisma {
     updated_at?: boolean
     created_by?: boolean
     updated_by?: boolean
-    status?: boolean
+    is_deleted?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectScalar = {
@@ -1128,10 +1111,10 @@ export namespace Prisma {
     updated_at?: boolean
     created_by?: boolean
     updated_by?: boolean
-    status?: boolean
+    is_deleted?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "first_name" | "last_name" | "username" | "email" | "created_at" | "updated_at" | "created_by" | "updated_by" | "status", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "first_name" | "last_name" | "username" | "email" | "created_at" | "updated_at" | "created_by" | "updated_by" | "is_deleted", ExtArgs["result"]["user"]>
 
   export type $UserPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "User"
@@ -1146,7 +1129,7 @@ export namespace Prisma {
       updated_at: Date | null
       created_by: string | null
       updated_by: string | null
-      status: $Enums.GeneralStatus
+      is_deleted: boolean
     }, ExtArgs["result"]["user"]>
     composites: {}
   }
@@ -1579,7 +1562,7 @@ export namespace Prisma {
     readonly updated_at: FieldRef<"User", 'DateTime'>
     readonly created_by: FieldRef<"User", 'String'>
     readonly updated_by: FieldRef<"User", 'String'>
-    readonly status: FieldRef<"User", 'GeneralStatus'>
+    readonly is_deleted: FieldRef<"User", 'Boolean'>
   }
     
 
@@ -1970,7 +1953,7 @@ export namespace Prisma {
     updated_at: 'updated_at',
     created_by: 'created_by',
     updated_by: 'updated_by',
-    status: 'status'
+    is_deleted: 'is_deleted'
   };
 
   export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -2034,16 +2017,9 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'GeneralStatus'
+   * Reference to a field of type 'Boolean'
    */
-  export type EnumGeneralStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'GeneralStatus'>
-    
-
-
-  /**
-   * Reference to a field of type 'GeneralStatus[]'
-   */
-  export type ListEnumGeneralStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'GeneralStatus[]'>
+  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
     
 
 
@@ -2077,7 +2053,7 @@ export namespace Prisma {
     updated_at?: DateTimeNullableFilter<"User"> | Date | string | null
     created_by?: StringNullableFilter<"User"> | string | null
     updated_by?: StringNullableFilter<"User"> | string | null
-    status?: EnumGeneralStatusFilter<"User"> | $Enums.GeneralStatus
+    is_deleted?: BoolFilter<"User"> | boolean
   }
 
   export type UserOrderByWithRelationInput = {
@@ -2090,7 +2066,7 @@ export namespace Prisma {
     updated_at?: SortOrderInput | SortOrder
     created_by?: SortOrderInput | SortOrder
     updated_by?: SortOrderInput | SortOrder
-    status?: SortOrder
+    is_deleted?: SortOrder
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -2106,7 +2082,7 @@ export namespace Prisma {
     updated_at?: DateTimeNullableFilter<"User"> | Date | string | null
     created_by?: StringNullableFilter<"User"> | string | null
     updated_by?: StringNullableFilter<"User"> | string | null
-    status?: EnumGeneralStatusFilter<"User"> | $Enums.GeneralStatus
+    is_deleted?: BoolFilter<"User"> | boolean
   }, "id" | "username" | "email">
 
   export type UserOrderByWithAggregationInput = {
@@ -2119,7 +2095,7 @@ export namespace Prisma {
     updated_at?: SortOrderInput | SortOrder
     created_by?: SortOrderInput | SortOrder
     updated_by?: SortOrderInput | SortOrder
-    status?: SortOrder
+    is_deleted?: SortOrder
     _count?: UserCountOrderByAggregateInput
     _max?: UserMaxOrderByAggregateInput
     _min?: UserMinOrderByAggregateInput
@@ -2138,7 +2114,7 @@ export namespace Prisma {
     updated_at?: DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
     created_by?: StringNullableWithAggregatesFilter<"User"> | string | null
     updated_by?: StringNullableWithAggregatesFilter<"User"> | string | null
-    status?: EnumGeneralStatusWithAggregatesFilter<"User"> | $Enums.GeneralStatus
+    is_deleted?: BoolWithAggregatesFilter<"User"> | boolean
   }
 
   export type UserCreateInput = {
@@ -2151,7 +2127,7 @@ export namespace Prisma {
     updated_at?: Date | string | null
     created_by?: string | null
     updated_by?: string | null
-    status?: $Enums.GeneralStatus
+    is_deleted?: boolean
   }
 
   export type UserUncheckedCreateInput = {
@@ -2164,7 +2140,7 @@ export namespace Prisma {
     updated_at?: Date | string | null
     created_by?: string | null
     updated_by?: string | null
-    status?: $Enums.GeneralStatus
+    is_deleted?: boolean
   }
 
   export type UserUpdateInput = {
@@ -2177,7 +2153,7 @@ export namespace Prisma {
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     created_by?: NullableStringFieldUpdateOperationsInput | string | null
     updated_by?: NullableStringFieldUpdateOperationsInput | string | null
-    status?: EnumGeneralStatusFieldUpdateOperationsInput | $Enums.GeneralStatus
+    is_deleted?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type UserUncheckedUpdateInput = {
@@ -2190,7 +2166,7 @@ export namespace Prisma {
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     created_by?: NullableStringFieldUpdateOperationsInput | string | null
     updated_by?: NullableStringFieldUpdateOperationsInput | string | null
-    status?: EnumGeneralStatusFieldUpdateOperationsInput | $Enums.GeneralStatus
+    is_deleted?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type UserCreateManyInput = {
@@ -2203,7 +2179,7 @@ export namespace Prisma {
     updated_at?: Date | string | null
     created_by?: string | null
     updated_by?: string | null
-    status?: $Enums.GeneralStatus
+    is_deleted?: boolean
   }
 
   export type UserUpdateManyMutationInput = {
@@ -2216,7 +2192,7 @@ export namespace Prisma {
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     created_by?: NullableStringFieldUpdateOperationsInput | string | null
     updated_by?: NullableStringFieldUpdateOperationsInput | string | null
-    status?: EnumGeneralStatusFieldUpdateOperationsInput | $Enums.GeneralStatus
+    is_deleted?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type UserUncheckedUpdateManyInput = {
@@ -2229,7 +2205,7 @@ export namespace Prisma {
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     created_by?: NullableStringFieldUpdateOperationsInput | string | null
     updated_by?: NullableStringFieldUpdateOperationsInput | string | null
-    status?: EnumGeneralStatusFieldUpdateOperationsInput | $Enums.GeneralStatus
+    is_deleted?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type StringFilter<$PrismaModel = never> = {
@@ -2273,11 +2249,9 @@ export namespace Prisma {
     not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
   }
 
-  export type EnumGeneralStatusFilter<$PrismaModel = never> = {
-    equals?: $Enums.GeneralStatus | EnumGeneralStatusFieldRefInput<$PrismaModel>
-    in?: $Enums.GeneralStatus[] | ListEnumGeneralStatusFieldRefInput<$PrismaModel>
-    notIn?: $Enums.GeneralStatus[] | ListEnumGeneralStatusFieldRefInput<$PrismaModel>
-    not?: NestedEnumGeneralStatusFilter<$PrismaModel> | $Enums.GeneralStatus
+  export type BoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
   }
 
   export type SortOrderInput = {
@@ -2295,7 +2269,7 @@ export namespace Prisma {
     updated_at?: SortOrder
     created_by?: SortOrder
     updated_by?: SortOrder
-    status?: SortOrder
+    is_deleted?: SortOrder
   }
 
   export type UserMaxOrderByAggregateInput = {
@@ -2308,7 +2282,7 @@ export namespace Prisma {
     updated_at?: SortOrder
     created_by?: SortOrder
     updated_by?: SortOrder
-    status?: SortOrder
+    is_deleted?: SortOrder
   }
 
   export type UserMinOrderByAggregateInput = {
@@ -2321,7 +2295,7 @@ export namespace Prisma {
     updated_at?: SortOrder
     created_by?: SortOrder
     updated_by?: SortOrder
-    status?: SortOrder
+    is_deleted?: SortOrder
   }
 
   export type StringWithAggregatesFilter<$PrismaModel = never> = {
@@ -2374,14 +2348,12 @@ export namespace Prisma {
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
-  export type EnumGeneralStatusWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.GeneralStatus | EnumGeneralStatusFieldRefInput<$PrismaModel>
-    in?: $Enums.GeneralStatus[] | ListEnumGeneralStatusFieldRefInput<$PrismaModel>
-    notIn?: $Enums.GeneralStatus[] | ListEnumGeneralStatusFieldRefInput<$PrismaModel>
-    not?: NestedEnumGeneralStatusWithAggregatesFilter<$PrismaModel> | $Enums.GeneralStatus
+  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
     _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumGeneralStatusFilter<$PrismaModel>
-    _max?: NestedEnumGeneralStatusFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -2396,8 +2368,8 @@ export namespace Prisma {
     set?: Date | string | null
   }
 
-  export type EnumGeneralStatusFieldUpdateOperationsInput = {
-    set?: $Enums.GeneralStatus
+  export type BoolFieldUpdateOperationsInput = {
+    set?: boolean
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -2439,11 +2411,9 @@ export namespace Prisma {
     not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
   }
 
-  export type NestedEnumGeneralStatusFilter<$PrismaModel = never> = {
-    equals?: $Enums.GeneralStatus | EnumGeneralStatusFieldRefInput<$PrismaModel>
-    in?: $Enums.GeneralStatus[] | ListEnumGeneralStatusFieldRefInput<$PrismaModel>
-    notIn?: $Enums.GeneralStatus[] | ListEnumGeneralStatusFieldRefInput<$PrismaModel>
-    not?: NestedEnumGeneralStatusFilter<$PrismaModel> | $Enums.GeneralStatus
+  export type NestedBoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
   }
 
   export type NestedStringWithAggregatesFilter<$PrismaModel = never> = {
@@ -2516,14 +2486,12 @@ export namespace Prisma {
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
-  export type NestedEnumGeneralStatusWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.GeneralStatus | EnumGeneralStatusFieldRefInput<$PrismaModel>
-    in?: $Enums.GeneralStatus[] | ListEnumGeneralStatusFieldRefInput<$PrismaModel>
-    notIn?: $Enums.GeneralStatus[] | ListEnumGeneralStatusFieldRefInput<$PrismaModel>
-    not?: NestedEnumGeneralStatusWithAggregatesFilter<$PrismaModel> | $Enums.GeneralStatus
+  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
     _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumGeneralStatusFilter<$PrismaModel>
-    _max?: NestedEnumGeneralStatusFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
   }
 
 
