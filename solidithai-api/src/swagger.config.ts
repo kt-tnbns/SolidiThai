@@ -6,7 +6,6 @@ export function swaggerConfig(app: INestApplication) {
     .setTitle('SolidiThai API')
     .setDescription('SolidiThai API Documentation')
     .addBearerAuth()
-    .addBasicAuth()
     .setVersion('0.0.1')
     .build()
 
