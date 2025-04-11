@@ -127,7 +127,7 @@ exports.Prisma.UserScalarFieldEnum = {
   updated_at: 'updated_at',
   created_by: 'created_by',
   updated_by: 'updated_by',
-  status: 'status'
+  is_deleted: 'is_deleted'
 };
 
 exports.Prisma.SortOrder = {
@@ -144,10 +144,7 @@ exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
 };
-exports.GeneralStatus = exports.$Enums.GeneralStatus = {
-  ACTIVE: 'ACTIVE',
-  INACTIVE: 'INACTIVE'
-};
+
 
 exports.Prisma.ModelName = {
   User: 'User'

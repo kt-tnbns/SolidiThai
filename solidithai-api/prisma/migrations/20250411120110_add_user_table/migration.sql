@@ -1,6 +1,3 @@
--- CreateEnum
-CREATE TYPE "GeneralStatus" AS ENUM ('ACTIVE', 'INACTIVE');
-
 -- CreateTable
 CREATE TABLE "User" (
     "id" TEXT NOT NULL,
@@ -12,7 +9,7 @@ CREATE TABLE "User" (
     "updated_at" TIMESTAMP(3),
     "created_by" TEXT,
     "updated_by" TEXT,
-    "status" "GeneralStatus" NOT NULL DEFAULT 'ACTIVE',
+    "is_deleted" BOOLEAN NOT NULL DEFAULT false,
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
 );
