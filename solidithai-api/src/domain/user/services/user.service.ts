@@ -4,8 +4,10 @@ import {
   NotFoundException,
 } from '@nestjs/common'
 import { GetListResponse } from 'src/common/types/response'
+import { UserContext } from 'src/common/types/user-context'
 import { UserDomain } from 'src/domain/user/dto/domains/user.domain'
 import { CreateUserRequestDto } from 'src/domain/user/dto/request/create-user-request.dto'
+import { GetUsersRequestDto } from 'src/domain/user/dto/request/get-users-request.dto'
 import { UpdateUserRequestDto } from 'src/domain/user/dto/request/update-user-request.dto'
 import { UserMapper } from 'src/domain/user/mappers/user-mapper'
 import { UserRepository } from 'src/domain/user/repositories/user.repository'
@@ -19,13 +21,15 @@ export class UserService {
     private readonly userValidator: UserValidator,
   ) {}
 
-  async findAll(): Promise<GetListResponse<UserDomain>> {
+  async findAll(
+    query: GetUsersRequestDto,
+  ): Promise<GetListResponse<UserDomain>> {
     try {
-      const users = await this.userRepository.findAll()
-      const mappedUsers = this.userMapper.toDomains(users)
+      const users = await this.userRepository.findAll(query)
+      const mappedUsers = this.userMapper.toDomains(users.data)
       return {
         items: mappedUsers,
-        total: mappedUsers.length,
+        total: users.meta.total,
       }
     } catch (error) {
       throw error
@@ -42,14 +46,17 @@ export class UserService {
     }
   }
 
-  async createUser(body: CreateUserRequestDto): Promise<UserDomain> {
+  async createUser(
+    body: CreateUserRequestDto,
+    currentUser: UserContext,
+  ): Promise<UserDomain> {
     const existingUser = await this.userRepository.findUserByEmail(body.email)
 
     if (existingUser) {
       throw new BadRequestException('User already exists')
     }
 
-    const user = await this.userRepository.createUser(body)
+    const user = await this.userRepository.createUser(body, currentUser)
     return this.userMapper.toDomain(user)
   }
 
@@ -71,6 +78,7 @@ export class UserService {
   async updateUser(
     id: string,
     body: UpdateUserRequestDto,
+    currentUser: UserContext,
   ): Promise<UserDomain> {
     try {
       const user = await this.findOneById(id)
@@ -78,7 +86,11 @@ export class UserService {
         throw new NotFoundException('User not found')
       }
 
-      const updatedUser = await this.userRepository.updateUser(id, body)
+      const updatedUser = await this.userRepository.updateUser(
+        id,
+        body,
+        currentUser,
+      )
       return this.userMapper.toDomain(updatedUser)
     } catch (error) {
       throw error

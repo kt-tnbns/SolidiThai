@@ -8,6 +8,7 @@ export class LoginDto {
     description: 'The email of the user',
     example: 'john.doe@example.com',
   })
+  @Transform(({ value }) => value.toLowerCase())
   email: string
 
   @IsString()

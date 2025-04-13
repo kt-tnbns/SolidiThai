@@ -18,6 +18,13 @@ async function bootstrap() {
 
   app.useGlobalPipes(new ValidationPipe({ transform: true }))
 
+  app.enableCors({
+    origin: process.env.WEB_URL,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true,
+  })
+
   swaggerConfig(app)
 
   await app.listen(process.env.PORT ?? 3000)

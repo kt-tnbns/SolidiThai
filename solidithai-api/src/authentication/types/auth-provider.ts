@@ -6,5 +6,5 @@ export type DecodedOneTimeToken = {
 
 export type DecodedAccessToken = {
   sub: string
-  username: string
+  email: string
 }
