@@ -1,55 +1,39 @@
 import { useState } from "react"
 import { User } from "../../../types/auth"
-import { DataTableColDef } from "../../../types/dataTable"
 import { useGetUsers } from "../../../api/userApi"
+import { SortOrder } from "../../../enums/sort-order"
+import { useSearchParams } from "react-router-dom"
 
 export const useUserTable = () => {
   const [selectedUser, setSelectedUser] = useState<User | null>(null)
   const [isEditModalOpen, setIsEditModalOpen] = useState(false)
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
   const [isAddUserModalOpen, setIsAddUserModalOpen] = useState(false)
-  const { data: users, isLoading } = useGetUsers({
+
+  const [searchParams] = useSearchParams()
+
+  const [params, setParams] = useState<{
+    page: number
+    limit: number
+    keyword?: string
+    sortBy?: string
+    sortOrder?: SortOrder
+  }>({
     page: 1,
     limit: 10,
+    sortBy: 'createdAt',
+    sortOrder: SortOrder.DESC,
   })
-  
-  const columns: DataTableColDef<User>[] = [
-    {
-      headerName: 'Name',
-      field: 'firstName',
-      sortable: true,
-    },
-    {
-      headerName: 'Last Name',
-      field: 'lastName',
-      sortable: true,
-    },
-    {
-      headerName: 'Email',
-      field: 'email',
-      sortable: true,
-    },
-    {
-      headerName: 'Create at',
-      field: 'createdAt',
-      renderCell: (params) => new Date(params.createdAt).toLocaleString('th-TH', {
-        year: 'numeric',
-        month: '2-digit',
-        day: '2-digit',
-      }),
-      sortable: true,
-    },
-    {
-      headerName: 'Updated at',
-      field: 'updatedAt',
-      renderCell: (params) => new Date(params.updatedAt).toLocaleString('th-TH', {
-        year: 'numeric',
-        month: '2-digit',
-        day: '2-digit',
-      }),
-      sortable: true,
-    },
-  ]
+
+  const onSort = (sortBy: string, sortOrder?: SortOrder) => {
+    setParams((prev) => ({
+      ...prev,
+      sortBy,
+      sortOrder,
+    }))
+  }
+
+  const { data: users, isLoading } = useGetUsers({ ...params, ...Object.fromEntries(searchParams) })
 
   const handleEdit = (user: User) => {
     setSelectedUser(user)
@@ -93,7 +77,6 @@ export const useUserTable = () => {
   }
 
   return {
-    columns,
     handleEdit,
     handleDelete,
     handleEditSubmit,
@@ -107,7 +90,10 @@ export const useUserTable = () => {
     isDeleteModalOpen,
     isAddUserModalOpen,
     selectedUser,
-    users: users?.items || [],
+    users,
     isLoading,
+    setParams,
+    params,
+    onSort,
   }
 }

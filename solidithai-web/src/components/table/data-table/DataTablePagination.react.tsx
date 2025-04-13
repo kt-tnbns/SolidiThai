@@ -46,13 +46,14 @@ const DataTablePagination: React.FC<DataTablePaginationProps> = ({
       }}
       gap={breakpointMD ? 1 : 0}
       flexDirection={{
-        xs: 'column',
         lg: 'row',
       }}
       {...props}
     >
       <Typography>
-        {`${Math.min((currentPage - 1) * rowsPerPage + 1, totalCount)} - ${Math.min(rowsPerPage * currentPage, totalCount)} of ${totalCount}`}
+        {`From ${Math.min((currentPage - 1) * rowsPerPage + 1, totalCount)}
+          to ${Math.min(rowsPerPage * currentPage, totalCount)}
+          of ${totalCount}`}
       </Typography>
       <Pagination
         count={count}

@@ -1,12 +1,11 @@
 import {
-  Box,
   BoxProps,
   Button, IconButton,
-  Stack,
-  Typography
+  Stack, Typography
 } from '@mui/material'
 import { Fragment, ReactNode, forwardRef } from 'react'
 import { ModalBoxTemplate } from '../modal/ModalTemplate.react'
+import { FaX } from 'react-icons/fa6'
 
 interface CommonBoxFormProps extends BoxProps {
   title: string
@@ -19,11 +18,6 @@ interface CommonBoxFormProps extends BoxProps {
   onClose: () => void
   onDelete?: () => void
   onCancel?: () => void
-  isEditable?: boolean
-  isDeletable?: boolean
-  isShowCloseIcon?: boolean
-  isManageable?: boolean
-  disabledClickOutsideToClose?: boolean
   gapChildren?: number
 }
 
@@ -40,23 +34,16 @@ export const CommonBoxForm = forwardRef<HTMLDivElement, CommonBoxFormProps>(
       onSubmit,
       onDelete,
       onCancel,
-      isEditable,
-      isShowCloseIcon = true,
-      isManageable = true,
       width,
       gap,
       gapChildren,
-      disabledClickOutsideToClose,
       ...props
     },
     ref,
   ) => {
     const hasButton = cancelText || submitText
     return (
-      <>
-        {disabledClickOutsideToClose && (
-          <Box width="100dvw" height="100dvh" position="absolute" />
-        )}
+      <Fragment>
         <ModalBoxTemplate gap={gap} width={width} ref={ref} {...props}>
           {loading ? (
             'Loading...'
@@ -81,11 +68,9 @@ export const CommonBoxForm = forwardRef<HTMLDivElement, CommonBoxFormProps>(
                     </Typography>
                   )}
                 </Stack>
-                {isShowCloseIcon && (
-                  <IconButton onClick={onClose}>
-                    'X'
-                  </IconButton>
-                )}
+                <IconButton onClick={onClose}>
+                  <FaX />
+                </IconButton>
               </Stack>
               <Stack
                 gap={gapChildren || { xs: 4, sm: 5 }}
@@ -99,11 +84,6 @@ export const CommonBoxForm = forwardRef<HTMLDivElement, CommonBoxFormProps>(
                     direction={{ xs: 'column-reverse', sm: 'row' }}
                     justifyContent={onDelete ? 'space-between' : 'end'}
                     gap={2}
-                    sx={
-                      isEditable === false
-                        ? { display: 'none' }
-                        : { display: 'flex' }
-                    }
                   >
                     <Stack
                       direction={{ xs: 'column-reverse', sm: 'row' }}
@@ -128,7 +108,6 @@ export const CommonBoxForm = forwardRef<HTMLDivElement, CommonBoxFormProps>(
                           variant="contained"
                           type="submit"
                           onClick={onSubmit}
-                          disabled={!isManageable}
                         >
                           {submitText}
                         </Button>
@@ -140,7 +119,7 @@ export const CommonBoxForm = forwardRef<HTMLDivElement, CommonBoxFormProps>(
             </Fragment>
           )}
         </ModalBoxTemplate>
-      </>
+      </Fragment>
     )
   },
 )

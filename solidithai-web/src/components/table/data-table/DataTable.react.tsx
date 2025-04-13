@@ -1,5 +1,4 @@
-import { Stack, Box, TableContainer, Table, TableHead, TableRow, TableCell, TableSortLabel, TableBody, LinearProgress, Collapse, Skeleton } from "@mui/material"
-import { ReactNode, SetStateAction, useState } from "react"
+import { Stack, Box, TableContainer, Table, TableHead, TableRow, TableCell, TableSortLabel, TableBody, LinearProgress, Skeleton } from "@mui/material"
 import { Fragment } from "react/jsx-runtime"
 import { useScreen } from "../../../hooks/useScreen"
 import { DataTableEmpty } from "./DataTableEmpty.react"
@@ -29,16 +28,8 @@ export type DataTablePropType<T extends ActionableItem & CollapseAbleItem> = {
   count: number
   sortBy?: string
   sortOrder?: SortOrder
-  emptyDataChildren?: ReactNode
   isFetching?: boolean
   loading?: boolean
-  setSelectedRowMenu?: (value: SetStateAction<T | undefined>) => void
-  isFiltering?: boolean
-  onClickRow?: (row: T) => void
-  isOverflow?: boolean
-  overFlowMaxHeight?: number
-  collapseAble?: boolean
-  hasActionHeader?: boolean
 }
 
 export const DataTable = <T extends ActionableItem & CollapseAbleItem>(
@@ -61,37 +52,16 @@ export const DataTable = <T extends ActionableItem & CollapseAbleItem>(
     onRowsPerPageChange,
     onEdit,
     onDelete,
-    emptyDataChildren,
     loading = false,
     isFetching,
-    onClickRow,
-    isOverflow,
-    overFlowMaxHeight,
-    collapseAble = false,
   } = props
 
   const { isMoreLg } = useScreen()
-  const [rowExpand, setRowExpand] = useState<string>('')
 
   const hasAction = Boolean(onEdit || onDelete)
   const columnCount = columns.length + (hasAction ? 1 : 0)
 
-  const toggleExpand = (rowId: string) => {
-    if (!collapseAble) {
-      return
-    }
-    setRowExpand((prev) => (prev === rowId ? '' : rowId))
-  }
-
-  const handleOnClickRow = (row: T) => {
-    if (onClickRow) {
-      onClickRow(row)
-    } else if (collapseAble) {
-      toggleExpand(row.id)
-    }
-  }
-
-  const renderCellByField = (field: string, row: T, header: DataTableColDef<T>) => (
+  const renderCellByField = (row: T, header: DataTableColDef<T>) => (
     <TableCellSpanStyled>{`${row[header.field] ?? ''
       }`}</TableCellSpanStyled>
   )
@@ -106,7 +76,7 @@ export const DataTable = <T extends ActionableItem & CollapseAbleItem>(
         {header.renderCell ? (
           <header.renderCell {...row} />
         ) : (
-          renderCellByField(header.field, row, header)
+          renderCellByField(row, header)
         )}
       </Box>
     )
@@ -137,12 +107,7 @@ export const DataTable = <T extends ActionableItem & CollapseAbleItem>(
           }}
         />
       )}
-      <TableContainer
-        sx={{
-          maxHeight: isOverflow ? overFlowMaxHeight : undefined,
-          overflow: isOverflow ? 'auto' : undefined,
-        }}
-      >
+      <TableContainer>
         <Table aria-label="generic table" stickyHeader>
           <TableHead>
             <TableRow sx={{ whiteSpace: 'nowrap' }}>
@@ -182,7 +147,7 @@ export const DataTable = <T extends ActionableItem & CollapseAbleItem>(
                     </TableCell>
                   ),
               )}
-              {hasAction && !rows.length && <TableActionCellStyled />}
+              {(hasAction && Boolean(rows.length)) && <TableActionCellStyled />}
             </TableRow>
           </TableHead>
           <TableBody>
@@ -208,9 +173,7 @@ export const DataTable = <T extends ActionableItem & CollapseAbleItem>(
                       <DataTableEmpty
                         title={noDataTitleText}
                         description={noDataDescriptionText}
-                      >
-                        {emptyDataChildren}
-                      </DataTableEmpty>
+                      />
                     </TableCellStyled>
                   </TableRow>
                 ) : (
@@ -218,8 +181,6 @@ export const DataTable = <T extends ActionableItem & CollapseAbleItem>(
                     <Fragment key={`row-${item.id}`}>
                       <TableRowStyled
                         key={item.id}
-                        onClick={() => handleOnClickRow(item)}
-                        sx={{ cursor: collapseAble ? 'pointer' : 'default' }}
                       >
                         {columns.map(
                           (header) =>
@@ -250,19 +211,6 @@ export const DataTable = <T extends ActionableItem & CollapseAbleItem>(
                           onDelete={onDelete}
                         />
                       </TableRowStyled>
-                      {collapseAble && rowExpand === item.id && (
-                        <TableRowStyled key={`collapse-${item.id}`}>
-                          <TableCell colSpan={columnCount}>
-                            <Collapse
-                              in={rowExpand === item.id}
-                              timeout="auto"
-                              unmountOnExit
-                            >
-                              {item.collapseItem}
-                            </Collapse>
-                          </TableCell>
-                        </TableRowStyled>
-                      )}
                     </Fragment>
                   ))
                 )}

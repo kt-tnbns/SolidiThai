@@ -2,8 +2,8 @@
 import { useMemo } from 'react'
 import { ActionableItem } from '../../../types/dataTable'
 import { useDataTableActionHandler } from './dataTableActionHandler'
-import { TableActionCellStyled } from './DataTableStyled.react'
 import { Stack } from '@mui/material'
+import { TableActionCellStyled } from './DataTableStyled.react'
 
 type DataTableActionProps<T> = {
   item: T
@@ -23,7 +23,7 @@ export const DataTableAction = <T extends ActionableItem>({
       onDelete,
     })
 
-  const hasAction = !!(onEdit || onDelete)
+  const hasAction = Boolean(onEdit || onDelete)
 
   const actionColumnSize = useMemo(getActionColumnSize, [
     hasAction,

@@ -2,11 +2,13 @@ import { Button, Modal } from "@mui/material"
 import { DataTable } from "../../../components/table/data-table/DataTable.react"
 import { useUserTable } from "./useUserTable"
 import { CommonBoxForm } from "../../../components/box/CommonBox.react"
+import { SortOrder } from "../../../enums/sort-order"
+import { userColumns } from "./userColumn"
+import { Fragment } from "react/jsx-runtime"
 
 export const UserTable = () => {
   const {
     users,
-    columns,
     handleEdit,
     handleDelete,
     handleEditSubmit,
@@ -20,20 +22,32 @@ export const UserTable = () => {
     handleOnCloseAddUserModal,
     handleAddUserSubmit,
     handleAddUser,
+    setParams,
+    params,
+    onSort,
+    isLoading,
   } = useUserTable()
 
+  const addUserButton = (
+    <Button onClick={handleAddUser} variant="contained" color="primary" size="large">Add User</Button>
+  )
+
   return (
-    <>
+    <Fragment>
       <DataTable
-        rows={users}
-        columns={columns}
-        rowsPerPage={10}
-        onPageChange={() => { }}
-        page={1}
-        count={10}
+        loading={isLoading}
+        rows={users?.items || []}
+        columns={userColumns}
+        rowsPerPage={params.limit}
+        onPageChange={(page) => setParams({ ...params, page })}
+        page={params.page}
+        count={users?.total || 0}
         onEdit={handleEdit}
         onDelete={handleDelete}
-        toolbarAction={<Button onClick={handleAddUser}>Add User</Button>}
+        onSort={onSort}
+        sortBy={params.sortBy}
+        sortOrder={params.sortOrder as SortOrder}
+        toolbarAction={addUserButton}
       />
 
       <Modal open={isEditModalOpen} onClose={handleOnCloseEditModal}>
@@ -74,6 +88,6 @@ export const UserTable = () => {
           <div>Add form content goes here</div>
         </CommonBoxForm>
       </Modal>
-    </>
+    </Fragment>
   )
 }

@@ -23,15 +23,11 @@ export const UserFilter = () => {
     <Stack px={3} p={3} gap={2} data-testid="curriculum-filter">
       <Box gap={2} display="grid" gridTemplateColumns={getResponsiveCol()}>
         <QueryTextField
-          id="outlined-basic"
           name="keyword"
           label="search"
           variant="outlined"
           placeholder="search"
           onBeforeSetSearchParams={setParams}
-          InputLabelProps={{
-            shrink: true,
-          }}
         />
       </Box>
     </Stack>
