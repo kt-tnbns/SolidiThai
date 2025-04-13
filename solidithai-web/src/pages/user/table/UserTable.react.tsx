@@ -6,14 +6,16 @@ import { SortOrder } from "../../../enums/sort-order"
 import { userColumns } from "./userColumn"
 import { Fragment } from "react/jsx-runtime"
 import { FaPlus } from "react-icons/fa6"
+import { CreateUserForm } from "../manage-user/create/CreateUserForm.react"
+import { UpdateUserForm } from "../manage-user/update/UpdateUserForm.react"
+import { DeleteUserForm } from "../manage-user/delete/DeleteUserForm.react"
 
 export const UserTable = () => {
   const {
     users,
     handleEdit,
     handleDelete,
-    handleEditSubmit,
-    handleDeleteSubmit,
+    refetch,
     isEditModalOpen,
     isDeleteModalOpen,
     isAddUserModalOpen,
@@ -21,7 +23,6 @@ export const UserTable = () => {
     handleOnCloseEditModal,
     handleOnCloseDeleteModal,
     handleOnCloseAddUserModal,
-    handleAddUserSubmit,
     handleAddUser,
     setParams,
     params,
@@ -33,7 +34,7 @@ export const UserTable = () => {
   const addUserButton = (
     <Button onClick={handleAddUser} variant="contained" color="primary" size="large" sx={{ gap: 1 }}>
       <FaPlus />
-      <Typography variant="subtitle1">Add User</Typography>
+      <Typography variant="body1">Add User</Typography>
     </Button>
   )
 
@@ -61,25 +62,19 @@ export const UserTable = () => {
         <CommonBoxForm
           title="Edit User"
           description={`Edit user ${selectedUser?.firstName}`}
-          submitText="Save"
-          cancelText="Cancel"
-          onSubmit={handleEditSubmit}
           onClose={handleOnCloseEditModal}
         >
-          <div>Edit form content goes here</div>
+          <UpdateUserForm onClose={handleOnCloseEditModal} refetch={refetch} user={selectedUser!} />
         </CommonBoxForm>
       </Modal>
 
       <Modal open={isDeleteModalOpen} onClose={handleOnCloseDeleteModal}>
         <CommonBoxForm
           title="Delete User"
-          description={`Are you sure you want to delete user ${selectedUser?.firstName}?`}
-          submitText="Delete"
-          cancelText="Cancel"
-          onSubmit={handleDeleteSubmit}
+          description={`Are you sure you want to delete user ${selectedUser?.email}?`}
           onClose={handleOnCloseDeleteModal}
         >
-          <div>This action cannot be undone.</div>
+          <DeleteUserForm onClose={handleOnCloseDeleteModal} refetch={refetch} user={selectedUser!} />
         </CommonBoxForm>
       </Modal>
 
@@ -87,12 +82,9 @@ export const UserTable = () => {
         <CommonBoxForm
           title="Add User"
           description="Add a new user"
-          submitText="Add"
-          cancelText="Cancel"
-          onSubmit={handleAddUserSubmit}
           onClose={handleOnCloseAddUserModal}
         >
-          <div>Add form content goes here</div>
+          <CreateUserForm onClose={handleOnCloseAddUserModal} refetch={refetch} />
         </CommonBoxForm>
       </Modal>
     </Fragment>

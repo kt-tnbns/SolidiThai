@@ -1,6 +1,6 @@
 import { ActionableItem } from '../../../types/dataTable'
 import { IconButton } from '@mui/material'
-import { FaPen, FaX } from "react-icons/fa6"
+import { FaPen, FaTrash } from "react-icons/fa6"
 
 type DataTableActionHandlerProps<T> = {
   item: T
@@ -46,7 +46,7 @@ export const useDataTableActionHandler = <T extends ActionableItem>({
         color="error"
         disabled={item.isDisableDelete}
       >
-        <FaX size={15} />
+        <FaTrash size={15} />
       </IconButton>
     )
 

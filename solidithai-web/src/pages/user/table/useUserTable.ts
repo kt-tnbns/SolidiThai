@@ -5,7 +5,7 @@ import { SortOrder } from "../../../enums/sort-order"
 import { useSearchParams } from "react-router-dom"
 
 export const useUserTable = () => {
-  const [selectedUser, setSelectedUser] = useState<User | null>(null)
+  const [selectedUser, setSelectedUser] = useState<User>()
   const [isEditModalOpen, setIsEditModalOpen] = useState(false)
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
   const [isAddUserModalOpen, setIsAddUserModalOpen] = useState(false)
@@ -34,7 +34,7 @@ export const useUserTable = () => {
     }))
   }
 
-  const { data: users, isLoading, isFetching } = useGetUsers({ ...params, ...Object.fromEntries(searchParams) })
+  const { data: users, isLoading, isFetching, refetch } = useGetUsers({ ...params, ...Object.fromEntries(searchParams) })
 
   const handleEdit = (user: User) => {
     setSelectedUser(user)
@@ -48,29 +48,16 @@ export const useUserTable = () => {
 
   const handleOnCloseEditModal = () => {
     setIsEditModalOpen(false)
-    setSelectedUser(null)
+    setSelectedUser(undefined)
   }
 
   const handleOnCloseDeleteModal = () => {
     setIsDeleteModalOpen(false)
-    setSelectedUser(null)
-  }
-
-  const handleEditSubmit = () => {
-    setIsEditModalOpen(false)
-  }
-
-  const handleDeleteSubmit = () => {
-    setIsDeleteModalOpen(false)
-    setSelectedUser(null)
+    setSelectedUser(undefined)
   }
 
   const handleAddUser = () => {
     setIsAddUserModalOpen(true)
-  }
-
-  const handleAddUserSubmit = () => {
-    setIsAddUserModalOpen(false)
   }
 
   const handleOnCloseAddUserModal = () => {
@@ -80,13 +67,10 @@ export const useUserTable = () => {
   return {
     handleEdit,
     handleDelete,
-    handleEditSubmit,
-    handleDeleteSubmit,
     handleOnCloseEditModal,
     handleOnCloseDeleteModal,
     handleOnCloseAddUserModal,
     handleAddUser,
-    handleAddUserSubmit,
     isEditModalOpen,
     isDeleteModalOpen,
     isAddUserModalOpen,
@@ -98,5 +82,6 @@ export const useUserTable = () => {
     params,
     onSort,
     setRowsPerPage,
+    refetch,
   }
 }

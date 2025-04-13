@@ -23,12 +23,13 @@ export const ModalBoxTemplate = ({
       mx={{ md: 'auto' }}
       maxWidth={{ md: '768px' }}
       maxHeight={{
-        xs: '80vh',
+        xs: '50vh',
         md: 'fit-content',
       }}
       sx={{ overflowY: 'auto', backgroundColor: 'white' }}
       gap={gap}
       width={width}
+      top={150}
       {...props}
     >
       {children}
