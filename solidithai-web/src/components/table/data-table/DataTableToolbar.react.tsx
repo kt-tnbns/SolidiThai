@@ -27,7 +27,7 @@ const DataTableToolbar: React.FC<DataTableToolbarPropType> = (props) => {
     action,
   } = props
 
-  const handleChanerowsPerPage = (
+  const handleChangeRowsPerPage = (
     event: SelectChangeEvent<number>,
   ) => {
     onChangeRowsPerPage?.(parseInt(event.target.value.toString(), 10))
@@ -62,7 +62,7 @@ const DataTableToolbar: React.FC<DataTableToolbarPropType> = (props) => {
             data-testid="per-page-options"
             label="Number of items"
             sx={{ height: 40 }}
-            onChange={handleChanerowsPerPage}
+            onChange={handleChangeRowsPerPage}
           >
             {rowsPerPageOptions.map((item) => (
               <MenuItem key={item} value={item}>
