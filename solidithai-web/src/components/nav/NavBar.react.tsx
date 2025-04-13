@@ -29,59 +29,73 @@ export const NavBar = () => {
   }
 
   return (
-    <AppBar position="static">
-      <Toolbar>
+    user && (
+      <AppBar position="static">
+        <Toolbar>
+          <Box sx={{ flexGrow: 1 }}>
+            <Link to="/user" style={{ textDecoration: 'none', color: 'inherit' }}>
+              <Typography variant="subtitle1" component="div" sx={{ flexGrow: 1 }}>
+                SolidiThai User Management
+              </Typography>
+            </Link>
+          </Box>
 
-        <Box sx={{ flexGrow: 1 }}>
-          <Link to="/user" style={{ textDecoration: 'none', color: 'inherit' }}>
-            <Typography variant="subtitle1" component="div" sx={{ flexGrow: 1 }}>
-              SolidiThai User Management
-            </Typography>
-          </Link>
-        </Box>
-
-        {user ? (
-          <Stack direction="row" gap={2}>
-            <IconButton
-              size="small"
-              onClick={handleMenu}
-              color="inherit"
-            >
-              <FaUser />
-            </IconButton>
-            <Menu
-              anchorEl={anchorEl}
-              open={Boolean(anchorEl)}
-              onClose={handleClose}
-              slotProps={{
-                paper: {
-                  sx: {
-                    px: 2,
-                  },
-                },
-              }}
-            >
-              <Stack gap={1} p={2}>
-                <Typography variant="subtitle1" component="div" sx={{ flexGrow: 1 }}>
-                  {user.firstName} {user.lastName}
-                </Typography>
-                <Typography variant="subtitle1" component="div" sx={{ flexGrow: 1 }}>
-                  {user.email}
-                </Typography>
-              </Stack>
-              <Divider />
-              <Stack gap={1} py={2}>
-                <MenuItem onClick={handleSettings} sx={{ color: 'primary.main' }}>Settings</MenuItem>
-                <MenuItem onClick={handleLogout} sx={{ color: 'error.main' }}>Logout</MenuItem>
-              </Stack>
-            </Menu>
+          <Stack direction="row" gap={2} pr={4}>
+            <Link to="/user" style={{ textDecoration: 'none', color: 'inherit' }}>
+              <Typography variant="subtitle1" component="div" sx={{ flexGrow: 1 }}>
+                Home
+              </Typography>
+            </Link>
+            <Link to="/user-settings" style={{ textDecoration: 'none', color: 'inherit' }}>
+              <Typography variant="subtitle1" component="div" sx={{ flexGrow: 1 }}>
+                Settings
+              </Typography>
+            </Link>
           </Stack>
-        ) : (
-          <Button color="inherit" onClick={() => navigate('/login')}>
-            Login
-          </Button>
-        )}
-      </Toolbar>
-    </AppBar>
+
+          {user ? (
+            <Stack direction="row" gap={2}>
+              <IconButton
+                size="small"
+                onClick={handleMenu}
+                color="inherit"
+              >
+                <FaUser />
+              </IconButton>
+              <Menu
+                anchorEl={anchorEl}
+                open={Boolean(anchorEl)}
+                onClose={handleClose}
+                slotProps={{
+                  paper: {
+                    sx: {
+                      px: 2,
+                    },
+                  },
+                }}
+              >
+                <Stack gap={1} p={2}>
+                  <Typography variant="subtitle1" component="div" sx={{ flexGrow: 1 }}>
+                    {user.firstName} {user.lastName}
+                  </Typography>
+                  <Typography variant="subtitle1" component="div" sx={{ flexGrow: 1 }}>
+                    {user.email}
+                  </Typography>
+                </Stack>
+                <Divider />
+                <Stack gap={1} py={2}>
+                  <MenuItem onClick={handleSettings} sx={{ color: 'primary.main' }}>Settings</MenuItem>
+                  <MenuItem onClick={handleLogout} sx={{ color: 'error.main' }}>Logout</MenuItem>
+                </Stack>
+              </Menu>
+            </Stack>
+          ) : (
+            <Button color="inherit" onClick={() => navigate('/login')}>
+              Login
+            </Button>
+          )}
+        </Toolbar>
+      </AppBar>
+    )
   )
 } 
