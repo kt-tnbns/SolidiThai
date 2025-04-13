@@ -1,4 +1,4 @@
-import axios from 'axios'
+import { axiosInstance } from '../hooks/axios'
 import type { AxiosRequestConfig } from 'axios'
 
 enum HttpStatusCode {
@@ -47,7 +47,7 @@ export class API {
     params: any = {},
     config?: AxiosRequestConfig<any>,
   ): Promise<R> => {
-    return axios
+    return axiosInstance
       .get(url, {
         ...config,
         params,
@@ -67,7 +67,7 @@ export class API {
     data: any = {},
     config: AxiosRequestConfig<any> = {},
   ): Promise<R> => {
-    return axios
+    return axiosInstance
       .post(url, data, {
         headers: { 'Content-Type': 'application/json' },
         ...config,
@@ -91,7 +91,7 @@ export class API {
     data: any = {},
     config: AxiosRequestConfig<any> = {},
   ): Promise<R> => {
-    return axios
+    return axiosInstance
       .put(url, data, {
         headers: { 'Content-Type': 'application/json' },
         ...config,
@@ -111,7 +111,7 @@ export class API {
     data: any = {},
     config: AxiosRequestConfig<any> = {},
   ): Promise<R> => {
-    return axios
+    return axiosInstance
       .patch(url, data, {
         headers: { 'Content-Type': 'application/json' },
         ...config,
@@ -131,7 +131,7 @@ export class API {
     data: File | null,
     config: AxiosRequestConfig<any> = {},
   ): Promise<R> => {
-    return axios
+    return axiosInstance
       .put(url, data, config)
       .then((res) => {
         if (res?.config?.responseType) {
@@ -147,7 +147,7 @@ export class API {
     url: string,
     config: AxiosRequestConfig<any> = {},
   ): Promise<R> => {
-    return axios
+    return axiosInstance
       .delete(url, config)
       .then((res) => {
         if (res?.config?.responseType) {

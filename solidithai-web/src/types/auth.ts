@@ -12,6 +12,11 @@ export interface LoginCredentials {
   password: string;
 }
 
+export interface LoginResponse {
+  user: User;
+  accessToken: string;
+}
+
 export interface AuthState {
   isAuthenticated: boolean;
   user: User | null;

@@ -1,5 +1,5 @@
 import { QueryClient } from '@tanstack/react-query'
-import { isTokenExpired } from './axios'
+import { isTokenExpired } from '../axios'
 
 const shouldRetry = (failureCount: number, error: any) => {
   if (isTokenExpired(error)) {

@@ -44,11 +44,11 @@ export const UserTable = () => {
         isLoading={isFetching || isLoading}
         rows={users?.items || []}
         columns={userColumns}
-        rowsPerPage={params.limit}
+        rowsPerPage={parseInt(params.limit)}
         rowsPerPageOptions={[10, 20, 50]}
-        onPageChange={(page) => setParams({ ...params, page })}
-        onRowsPerPageChange={(rowsPerPage) => setParams({ ...params, limit: rowsPerPage })}
-        page={params.page}
+        onPageChange={(page) => setParams({ ...params, page: page.toString() })}
+        onRowsPerPageChange={(rowsPerPage) => setParams({ ...params, limit: rowsPerPage.toString() })}
+        page={parseInt(params.page)}
         count={users?.total || 0}
         onEdit={handleEdit}
         onDelete={handleDelete}

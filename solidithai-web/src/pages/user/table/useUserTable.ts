@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { User } from "../../../types/auth"
 import { useGetUsers } from "../../../api/userApi"
 import { SortOrder } from "../../../enums/sort-order"
@@ -9,18 +9,18 @@ export const useUserTable = () => {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false)
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
   const [isAddUserModalOpen, setIsAddUserModalOpen] = useState(false)
-  const [rowsPerPage, setRowsPerPage] = useState(10)
+  const [rowsPerPage, setRowsPerPage] = useState('10')
 
-  const [searchParams] = useSearchParams()
+  const [searchParams, setSearchParams] = useSearchParams()
 
   const [params, setParams] = useState<{
-    page: number
-    limit: number
+    page: string
+    limit: string
     keyword?: string
     sortBy?: string
     sortOrder?: SortOrder
   }>({
-    page: 1,
+    page: '1',
     limit: rowsPerPage,
     sortBy: 'createdAt',
     sortOrder: SortOrder.DESC,
@@ -34,7 +34,7 @@ export const useUserTable = () => {
     }))
   }
 
-  const { data: users, isLoading, isFetching, refetch } = useGetUsers({ ...params, ...Object.fromEntries(searchParams) })
+  const { data: users, isLoading, isFetching, refetch } = useGetUsers({ ...Object.fromEntries(searchParams) })
 
   const handleEdit = (user: User) => {
     setSelectedUser(user)
@@ -63,6 +63,12 @@ export const useUserTable = () => {
   const handleOnCloseAddUserModal = () => {
     setIsAddUserModalOpen(false)
   }
+
+  useEffect(() => {
+    setSearchParams(params, {
+      replace: true,
+    })
+  }, [params])
 
   return {
     handleEdit,

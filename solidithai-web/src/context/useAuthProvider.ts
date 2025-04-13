@@ -2,30 +2,19 @@ import { toast } from "sonner"
 import { LoginCredentials, User, AuthState } from "../types/auth"
 import { useReducer, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
+import { useLogin } from "../api/authApi"
 
 const useAuthProvider = () => {
   const navigate = useNavigate();
 
+  const { mutateAsync: loginRequest, isPending: loginLoading } = useLogin()
+
   const loginApi = async (credentials: LoginCredentials): Promise<{ user: User; token: string }> => {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        if (credentials.email === 'admin@example.com' && credentials.password === 'password') {
-          resolve({
-            user: {
-              id: '1',
-              firstName: 'Admin',
-              lastName: 'User',
-              email: 'admin@example.com',
-              createdAt: new Date().toISOString(),
-              updatedAt: new Date().toISOString(),
-            },
-            token: 'mock-jwt-token',
-          })
-        } else {
-          reject(new Error('Invalid email or password'))
-        }
-      }, 1000)
-    })
+    const result = await loginRequest(credentials)
+    return {
+      user: result.user,
+      token: result.accessToken,
+    }
   }
 
   type AuthAction =
@@ -130,7 +119,8 @@ const useAuthProvider = () => {
   return {
     login,
     logout,
-    ...state
+    ...state,
+    loginLoading,
   }
 }
 

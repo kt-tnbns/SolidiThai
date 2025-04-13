@@ -1,9 +1,7 @@
 import { useState } from 'react'
 import {
   Button,
-  Box,
-  Link,
-  InputAdornment,
+  Box, InputAdornment,
   IconButton
 } from '@mui/material'
 import { FaEye, FaEyeSlash } from 'react-icons/fa'
@@ -18,8 +16,6 @@ export const LoginForm = () => {
 
   return (
     <Box
-      component="form"
-      onSubmit={handleSubmit(onSubmit)}
       sx={{
         width: '100%',
         display: 'flex',
@@ -64,20 +60,15 @@ export const LoginForm = () => {
       />
 
       <Button
-        type="submit"
         variant="contained"
         fullWidth
         color="primary"
         sx={{ mt: 2 }}
+        onClick={handleSubmit(onSubmit)}
       >
         Sign In
       </Button>
 
-      <Box sx={{ mt: 2, textAlign: 'center' }}>
-        <Link href="#" underline="hover">
-          Forgot password?
-        </Link>
-      </Box>
     </Box>
   )
 }

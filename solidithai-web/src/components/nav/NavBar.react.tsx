@@ -6,7 +6,7 @@ import { FaUser } from 'react-icons/fa6'
 
 export const NavBar = () => {
   const navigate = useNavigate()
-  const { user, logout } = useAuth()
+  const { user, logout, isAuthenticated } = useAuth()
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
 
   const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -29,7 +29,7 @@ export const NavBar = () => {
   }
 
   return (
-    user && (
+    isAuthenticated && (
       <AppBar position="static">
         <Toolbar>
           <Box sx={{ flexGrow: 1 }}>
