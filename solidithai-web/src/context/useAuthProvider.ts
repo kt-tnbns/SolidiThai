@@ -95,7 +95,7 @@ const useAuthProvider = () => {
       const result = await loginApi(credentials);
       dispatch({ type: 'LOGIN_SUCCESS', payload: result });
       toast.success('Login successful');
-      navigate('/users');
+      navigate('/user');
     } catch (error) {
       dispatch({ type: 'LOGIN_FAILURE', error: (error as Error).message });
       toast.error('Login failed: ' + (error as Error).message);

@@ -6,8 +6,8 @@ import { useUserSettings } from './useUserSettings'
 
 export const UserSettingsPage = () => {
 
-  const { methods, handleSubmit } = useUserSettings()
-  const { control } = methods
+  const { methods, onSubmit, isPending } = useUserSettings()
+  const { control, handleSubmit: handleSubmitForm } = methods
   return (
     <Page
       title="User Settings"
@@ -16,7 +16,7 @@ export const UserSettingsPage = () => {
       <Box sx={{ p: 3, maxWidth: 600, mx: 'auto' }}>
         <FormProvider {...methods}>
 
-          <Stack spacing={3} onSubmit={handleSubmit}>
+          <Stack spacing={3} >
             <FormTextField
               name="firstName"
               label="First Name"
@@ -36,7 +36,7 @@ export const UserSettingsPage = () => {
               fullWidth
               control={control}
             />
-            <Button type="submit" variant="contained">
+            <Button onClick={handleSubmitForm(onSubmit)} variant="contained" disabled={isPending}>
               Save Changes
             </Button>
           </Stack>

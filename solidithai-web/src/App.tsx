@@ -11,6 +11,7 @@ import { Toaster } from "sonner"
 import { AuthProvider } from "./context/AuthProvider.react"
 import { NavBar } from "./components/nav/NavBar.react"
 import { Box } from "@mui/material"
+import { ProtectedRoute } from "./components/route/ProtectedRoute.react"
 
 const queryClient = new QueryClient()
 
@@ -25,9 +26,9 @@ const App = () => (
             <Box component="main" sx={{ flexGrow: 1 }}>
               <Routes>
                 <Route path="/" element={<Index />} />
-                <Route path="/login" element={<LoginPage />} />
-                <Route path="/user" element={<UserPage />} />
-                <Route path="/user-settings" element={<UserSettingsPage />} />
+                <Route path="/login" element={<ProtectedRoute element={<LoginPage />} requireAuth={false} />} />
+                <Route path="/user" element={<ProtectedRoute element={<UserPage />} />} />
+                <Route path="/user-settings" element={<ProtectedRoute element={<UserSettingsPage />} />} />
               </Routes>
             </Box>
           </Box>

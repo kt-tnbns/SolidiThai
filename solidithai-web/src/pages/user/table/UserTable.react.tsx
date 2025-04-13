@@ -47,7 +47,7 @@ export const UserTable = () => {
         rowsPerPage={parseInt(params.limit)}
         rowsPerPageOptions={[10, 20, 50]}
         onPageChange={(page) => setParams({ ...params, page: page.toString() })}
-        onRowsPerPageChange={(rowsPerPage) => setParams({ ...params, limit: rowsPerPage.toString() })}
+        onRowsPerPageChange={(rowsPerPage) => setParams({ ...params, limit: rowsPerPage.toString(), page: '1' })}
         page={parseInt(params.page)}
         count={users?.total || 0}
         onEdit={handleEdit}
