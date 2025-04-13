@@ -1,67 +1,27 @@
 
 import {
   Box,
-  BoxProps, Paper,
-  Skeleton,
-  Stack,
-  StackProps, Typography
+  BoxProps, Paper, Stack, Typography
 } from '@mui/material'
 import {
   OverridableComponent,
   OverrideProps,
 } from '@mui/material/OverridableComponent'
-import { ReactNode } from 'react'
+import { Fragment, ReactNode } from 'react'
 
-const TEXT_WIDTH = 160
-const TEXT_HEIGHT = 56
-const BUTTON_WIDTH = 120
-const BREAD_CRUMB_HEIGHT = 32
-const AVATAR_SIZE = 40
-const LINE_HEIGHT = 1.5
-
-const PageLoadingHeader = () => {
-  return (
-    <Stack gap={0.5}>
-      <Stack direction="row" gap={1} alignItems="center">
-        <Skeleton width={TEXT_WIDTH} height={BREAD_CRUMB_HEIGHT} />
-        <Skeleton width={TEXT_WIDTH} height={BREAD_CRUMB_HEIGHT} />
-      </Stack>
-      <Stack direction="row" gap={1} alignItems="center">
-        <Skeleton variant="circular" width={AVATAR_SIZE} height={AVATAR_SIZE} />
-        <Skeleton width={TEXT_WIDTH} height={TEXT_HEIGHT} />
-      </Stack>
-    </Stack>
-  )
-}
-
-export const LoadingPage = (props: StackProps) => {
-  return (
-    <Stack gap={4} {...props}>
-      <Stack direction="row" justifyContent="space-between" alignItems="end">
-        <PageLoadingHeader />
-        <Skeleton width={BUTTON_WIDTH} height={TEXT_HEIGHT} />
-      </Stack>
-      <Box>
-        {[1, 2, 3].map((key) => (
-          <Skeleton key={key} height={TEXT_HEIGHT} />
-        ))}
-      </Box>
-    </Stack>
-  )
-}
+const LINE_HEIGHT = 1
 
 type TitleProps = {
   title?: string | ReactNode
   topRightChildren?: ReactNode
 }
 
-
 const Title = ({
   title,
   topRightChildren,
 }: TitleProps) => {
   return (
-    <>
+    <Fragment>
       <Stack
         direction={'row'}
         justifyContent="space-between"
@@ -71,7 +31,7 @@ const Title = ({
           <Typography
             lineHeight={LINE_HEIGHT}
             noWrap
-            variant="h4"
+            variant="h5"
           >
             {title}
           </Typography>
@@ -114,7 +74,7 @@ const Title = ({
           </Stack>
         </Box>
       </Stack>
-    </>
+    </Fragment>
   )
 }
 
@@ -144,16 +104,15 @@ export default function Page({
   ...props
 }: BoxProps & PageProps) {
 
-  if (isLoading) return <LoadingPage />
-
   return (
     <Box
       component={Paper}
-      elevation={0}
       display="flex"
       bgcolor="transparent"
       flexDirection="column"
       noValidate={noValidate}
+      p={4}
+      pb={6}
       {...props}
     >
       <Title

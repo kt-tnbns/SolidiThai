@@ -45,7 +45,7 @@ const DataTableToolbar: React.FC<DataTableToolbarPropType> = (props) => {
   return (
     <Toolbar
       sx={{
-        padding: '24px',
+        paddingBottom: 2,
         borderBottom: `1px solid ${theme.palette.divider}`,
         display: 'flex',
         flexDirection: isMobile ? 'column' : 'row',

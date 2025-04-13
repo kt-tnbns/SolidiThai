@@ -9,6 +9,7 @@ export const useUserTable = () => {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false)
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
   const [isAddUserModalOpen, setIsAddUserModalOpen] = useState(false)
+  const [rowsPerPage, setRowsPerPage] = useState(10)
 
   const [searchParams] = useSearchParams()
 
@@ -20,7 +21,7 @@ export const useUserTable = () => {
     sortOrder?: SortOrder
   }>({
     page: 1,
-    limit: 10,
+    limit: rowsPerPage,
     sortBy: 'createdAt',
     sortOrder: SortOrder.DESC,
   })
@@ -33,7 +34,7 @@ export const useUserTable = () => {
     }))
   }
 
-  const { data: users, isLoading } = useGetUsers({ ...params, ...Object.fromEntries(searchParams) })
+  const { data: users, isLoading, isFetching } = useGetUsers({ ...params, ...Object.fromEntries(searchParams) })
 
   const handleEdit = (user: User) => {
     setSelectedUser(user)
@@ -92,8 +93,10 @@ export const useUserTable = () => {
     selectedUser,
     users,
     isLoading,
+    isFetching,
     setParams,
     params,
     onSort,
+    setRowsPerPage,
   }
 }

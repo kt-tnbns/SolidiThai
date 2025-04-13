@@ -1,10 +1,11 @@
-import { Button, Modal } from "@mui/material"
+import { Button, Modal, Typography } from "@mui/material"
 import { DataTable } from "../../../components/table/data-table/DataTable.react"
 import { useUserTable } from "./useUserTable"
 import { CommonBoxForm } from "../../../components/box/CommonBox.react"
 import { SortOrder } from "../../../enums/sort-order"
 import { userColumns } from "./userColumn"
 import { Fragment } from "react/jsx-runtime"
+import { FaPlus } from "react-icons/fa6"
 
 export const UserTable = () => {
   const {
@@ -26,20 +27,26 @@ export const UserTable = () => {
     params,
     onSort,
     isLoading,
+    isFetching,
   } = useUserTable()
 
   const addUserButton = (
-    <Button onClick={handleAddUser} variant="contained" color="primary" size="large">Add User</Button>
+    <Button onClick={handleAddUser} variant="contained" color="primary" size="large" sx={{ gap: 1 }}>
+      <FaPlus />
+      <Typography variant="subtitle1">Add User</Typography>
+    </Button>
   )
 
   return (
     <Fragment>
       <DataTable
-        loading={isLoading}
+        isLoading={isFetching || isLoading}
         rows={users?.items || []}
         columns={userColumns}
         rowsPerPage={params.limit}
+        rowsPerPageOptions={[10, 20, 50]}
         onPageChange={(page) => setParams({ ...params, page })}
+        onRowsPerPageChange={(rowsPerPage) => setParams({ ...params, limit: rowsPerPage })}
         page={params.page}
         count={users?.total || 0}
         onEdit={handleEdit}

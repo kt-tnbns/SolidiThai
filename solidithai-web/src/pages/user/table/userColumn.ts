@@ -3,12 +3,12 @@ import { DataTableColDef } from "../../../types/dataTable"
 
 export const userColumns: DataTableColDef<User>[] = [
   {
-    headerName: 'Name',
+    headerName: 'First name',
     field: 'firstName',
     sortable: true,
   },
   {
-    headerName: 'Last Name',
+    headerName: 'Last name',
     field: 'lastName',
     sortable: true,
   },

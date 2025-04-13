@@ -68,7 +68,7 @@ export const CommonBoxForm = forwardRef<HTMLDivElement, CommonBoxFormProps>(
                     </Typography>
                   )}
                 </Stack>
-                <IconButton onClick={onClose}>
+                <IconButton onClick={onClose} sx={{ color: 'error.main' }}>
                   <FaX />
                 </IconButton>
               </Stack>

@@ -1,4 +1,4 @@
-import { Box, Stack } from '@mui/material'
+import { Box, Divider, Stack, Typography } from '@mui/material'
 import { QueryTextField } from '../../../components/query/QueryTextfield.react'
 import { useScreen } from '../../../hooks/useScreen'
 import { useUserFilter } from './useUserFilter'
@@ -16,19 +16,26 @@ export const UserFilter = () => {
     if (isMobileLandscape) {
       return '1fr 1fr'
     }
-    return '3fr 1fr'
+    return '1fr'
   }
 
   return (
-    <Stack px={3} p={3} gap={2} data-testid="curriculum-filter">
+    <Stack p={3} gap={2} >
+      <Typography variant="subtitle1">Search and filter users</Typography>
       <Box gap={2} display="grid" gridTemplateColumns={getResponsiveCol()}>
         <QueryTextField
           name="keyword"
-          label="search"
+          label="Search"
           variant="outlined"
-          placeholder="search"
+          placeholder="By name or email"
           onBeforeSetSearchParams={setParams}
+          slotProps={{
+            inputLabel: {
+              shrink: true,
+            },
+          }}
         />
+        <Divider />
       </Box>
     </Stack>
   )

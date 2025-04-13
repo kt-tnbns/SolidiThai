@@ -50,7 +50,7 @@ const DataTablePagination: React.FC<DataTablePaginationProps> = ({
       }}
       {...props}
     >
-      <Typography>
+      <Typography variant="body1">
         {`From ${Math.min((currentPage - 1) * rowsPerPage + 1, totalCount)}
           to ${Math.min(rowsPerPage * currentPage, totalCount)}
           of ${totalCount}`}

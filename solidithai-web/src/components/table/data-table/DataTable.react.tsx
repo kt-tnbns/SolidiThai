@@ -1,4 +1,4 @@
-import { Stack, Box, TableContainer, Table, TableHead, TableRow, TableCell, TableSortLabel, TableBody, LinearProgress, Skeleton } from "@mui/material"
+import { Stack, Box, TableContainer, Table, TableHead, TableRow, TableCell, TableSortLabel, TableBody, LinearProgress } from "@mui/material"
 import { Fragment } from "react/jsx-runtime"
 import { useScreen } from "../../../hooks/useScreen"
 import { DataTableEmpty } from "./DataTableEmpty.react"
@@ -28,8 +28,7 @@ export type DataTablePropType<T extends ActionableItem & CollapseAbleItem> = {
   count: number
   sortBy?: string
   sortOrder?: SortOrder
-  isFetching?: boolean
-  loading?: boolean
+  isLoading?: boolean
 }
 
 export const DataTable = <T extends ActionableItem & CollapseAbleItem>(
@@ -52,8 +51,7 @@ export const DataTable = <T extends ActionableItem & CollapseAbleItem>(
     onRowsPerPageChange,
     onEdit,
     onDelete,
-    loading = false,
-    isFetching,
+    isLoading = false,
   } = props
 
   const { isMoreLg } = useScreen()
@@ -125,6 +123,7 @@ export const DataTable = <T extends ActionableItem & CollapseAbleItem>(
                         maxWidth:
                           getResponsiveWidth(header?.maxWidth) || 'auto',
                         width: getResponsiveWidth(header?.maxWidth) || 'auto',
+                        fontWeight: 600,
                       }}
                     >
                       {header.sortable ? (
@@ -151,86 +150,78 @@ export const DataTable = <T extends ActionableItem & CollapseAbleItem>(
             </TableRow>
           </TableHead>
           <TableBody>
-            {loading ? (
-              <Skeleton
-                component="tr"
-                height={53}
-                width="100%"
-              />
-            ) : (
-              <>
-                {isFetching && !loading && (
-                  <TableRow>
-                    <TableCellStyled colSpan={columnCount} padding="none">
-                      <LinearProgress />
-                    </TableCellStyled>
-                  </TableRow>
-                )}
+            {isLoading && (
+              <TableRow>
+                <TableCellStyled colSpan={columnCount} padding="none">
+                  <LinearProgress />
+                </TableCellStyled>
+              </TableRow>
+            )}
 
-                {!rows || rows.length === 0 ? (
-                  <TableRow>
-                    <TableCellStyled colSpan={columnCount} align="center">
-                      <DataTableEmpty
-                        title={noDataTitleText}
-                        description={noDataDescriptionText}
-                      />
-                    </TableCellStyled>
-                  </TableRow>
-                ) : (
-                  rows.map((item) => (
-                    <Fragment key={`row-${item.id}`}>
-                      <TableRowStyled
-                        key={item.id}
-                      >
-                        {columns.map(
-                          (header) =>
-                            isRenderColumn(header) && (
-                              <TableCellStyled
-                                key={`${header.field}`}
-                                align={header?.align || 'left'}
-                                sx={{
-                                  minWidth:
-                                    header?.minWidth ||
-                                    header?.maxWidth ||
-                                    'auto',
-                                  maxWidth:
-                                    getResponsiveWidth(header?.maxWidth) ||
-                                    'auto',
-                                  width:
-                                    getResponsiveWidth(header?.maxWidth) ||
-                                    'auto',
-                                }}
-                              >
-                                {renderCellContent(header, item)}
-                              </TableCellStyled>
-                            ),
-                        )}
-                        <DataTableAction
-                          item={item}
-                          onEdit={onEdit}
-                          onDelete={onDelete}
-                        />
-                      </TableRowStyled>
-                    </Fragment>
-                  ))
-                )}
-              </>
+            {!rows || rows.length === 0 ? (
+              <TableRow>
+                <TableCellStyled colSpan={columnCount} align="center">
+                  <DataTableEmpty
+                    title={noDataTitleText}
+                    description={noDataDescriptionText}
+                  />
+                </TableCellStyled>
+              </TableRow>
+            ) : (
+              rows.map((item) => (
+                <Fragment key={`row-${item.id}`}>
+                  <TableRowStyled
+                    key={item.id}
+                  >
+                    {columns.map(
+                      (header) =>
+                        isRenderColumn(header) && (
+                          <TableCellStyled
+                            key={`${header.field}`}
+                            align={header?.align || 'left'}
+                            sx={{
+                              minWidth:
+                                header?.minWidth ||
+                                header?.maxWidth ||
+                                'auto',
+                              maxWidth:
+                                getResponsiveWidth(header?.maxWidth) ||
+                                'auto',
+                              width:
+                                getResponsiveWidth(header?.maxWidth) ||
+                                'auto',
+                            }}
+                          >
+                            {renderCellContent(header, item)}
+                          </TableCellStyled>
+                        ),
+                    )}
+                    <DataTableAction
+                      item={item}
+                      onEdit={onEdit}
+                      onDelete={onDelete}
+                    />
+                  </TableRowStyled>
+                </Fragment>
+              ))
             )}
           </TableBody>
         </Table>
       </TableContainer>
-      {Boolean(page || count) && (
-        <DataTablePagination
-          currentPage={page}
-          rowsPerPage={rowsPerPage}
-          onPageChange={onPageChange}
-          totalCount={count}
-          borderTop={1}
-          borderColor="divider"
-          p={2}
-        />
-      )}
-    </Stack>
+      {
+        Boolean(page || count) && (
+          <DataTablePagination
+            currentPage={page}
+            rowsPerPage={rowsPerPage}
+            onPageChange={onPageChange}
+            totalCount={count}
+            borderTop={1}
+            borderColor="divider"
+            p={2}
+          />
+        )
+      }
+    </Stack >
   )
 }
 
