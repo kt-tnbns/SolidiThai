@@ -1,6 +1,5 @@
 import { BadRequestException, Injectable } from '@nestjs/common'
 import { LoginDto } from '../dto/login.dto'
-import { RegisterDto } from '../dto/register.dto'
 import { AuthRepository } from '../repositories/auth.repository'
 import { AuthResponse } from '../types/auth.type'
 import { JwtService } from '@nestjs/jwt'
@@ -35,23 +34,6 @@ export class AuthService {
     }
   }
 
-  async register(body: RegisterDto): Promise<AuthResponse> {
-    const existingUser = await this.authRepository.findUserByEmail(body.email)
-
-    if (existingUser) {
-      throw new BadRequestException('User already exists')
-    }
-
-    const user = await this.authRepository.register(body)
-
-    const accessToken = await this.createAccessToken(user)
-
-    return {
-      user: this.userMapper.toDomain(user),
-      accessToken,
-    }
-  }
-
   async getMetadata(token: string): Promise<AuthResponse> {
     try {
       const decoded = await this.jwtService.verifyAsync<DecodedOneTimeToken>(
@@ -72,7 +54,7 @@ export class AuthService {
   }
 
   private async createAccessToken(user: User): Promise<string> {
-    const payload = { sub: user.id, username: user.email }
+    const payload = { sub: user.id, email: user.email }
 
     return this.jwtService.signAsync(payload)
   }

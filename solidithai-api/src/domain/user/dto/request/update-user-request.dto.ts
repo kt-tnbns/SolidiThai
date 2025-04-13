@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger'
 import { IsString, IsNotEmpty, IsEmail } from 'class-validator'
-
+import { Transform } from 'class-transformer'
 export class UpdateUserRequestDto {
   @ApiProperty({
     description: 'The first name of the user',
@@ -24,5 +24,6 @@ export class UpdateUserRequestDto {
   })
   @IsEmail()
   @IsNotEmpty()
+  @Transform(({ value }) => value.toLowerCase())
   email: string
 }
