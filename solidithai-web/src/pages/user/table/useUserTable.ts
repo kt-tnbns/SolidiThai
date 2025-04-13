@@ -7,7 +7,7 @@ export const useUserTable = () => {
   const [selectedUser, setSelectedUser] = useState<User | null>(null)
   const [isEditModalOpen, setIsEditModalOpen] = useState(false)
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
-
+  const [isAddUserModalOpen, setIsAddUserModalOpen] = useState(false)
   const { data: users, isLoading } = useGetUsers({
     page: 1,
     limit: 10,
@@ -20,8 +20,33 @@ export const useUserTable = () => {
       sortable: true,
     },
     {
+      headerName: 'Last Name',
+      field: 'lastName',
+      sortable: true,
+    },
+    {
       headerName: 'Email',
       field: 'email',
+      sortable: true,
+    },
+    {
+      headerName: 'Create at',
+      field: 'createdAt',
+      renderCell: (params) => new Date(params.createdAt).toLocaleString('th-TH', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+      }),
+      sortable: true,
+    },
+    {
+      headerName: 'Updated at',
+      field: 'updatedAt',
+      renderCell: (params) => new Date(params.updatedAt).toLocaleString('th-TH', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+      }),
       sortable: true,
     },
   ]
@@ -55,6 +80,18 @@ export const useUserTable = () => {
     setSelectedUser(null)
   }
 
+  const handleAddUser = () => {
+    setIsAddUserModalOpen(true)
+  }
+
+  const handleAddUserSubmit = () => {
+    setIsAddUserModalOpen(false)
+  }
+
+  const handleOnCloseAddUserModal = () => {
+    setIsAddUserModalOpen(false)
+  }
+
   return {
     columns,
     handleEdit,
@@ -63,8 +100,12 @@ export const useUserTable = () => {
     handleDeleteSubmit,
     handleOnCloseEditModal,
     handleOnCloseDeleteModal,
+    handleOnCloseAddUserModal,
+    handleAddUser,
+    handleAddUserSubmit,
     isEditModalOpen,
     isDeleteModalOpen,
+    isAddUserModalOpen,
     selectedUser,
     users: users?.items || [],
     isLoading,

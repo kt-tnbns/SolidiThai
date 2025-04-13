@@ -13,9 +13,13 @@ export const UserTable = () => {
     handleDeleteSubmit,
     isEditModalOpen,
     isDeleteModalOpen,
+    isAddUserModalOpen,
     selectedUser,
     handleOnCloseEditModal,
-    handleOnCloseDeleteModal
+    handleOnCloseDeleteModal,
+    handleOnCloseAddUserModal,
+    handleAddUserSubmit,
+    handleAddUser,
   } = useUserTable()
 
   return (
@@ -29,7 +33,7 @@ export const UserTable = () => {
         count={10}
         onEdit={handleEdit}
         onDelete={handleDelete}
-        toolbarAction={<Button>Add User</Button>}
+        toolbarAction={<Button onClick={handleAddUser}>Add User</Button>}
       />
 
       <Modal open={isEditModalOpen} onClose={handleOnCloseEditModal}>
@@ -55,6 +59,19 @@ export const UserTable = () => {
           onClose={handleOnCloseDeleteModal}
         >
           <div>This action cannot be undone.</div>
+        </CommonBoxForm>
+      </Modal>
+
+      <Modal open={isAddUserModalOpen} onClose={handleOnCloseAddUserModal}>
+        <CommonBoxForm
+          title="Add User"
+          description="Add a new user"
+          submitText="Add"
+          cancelText="Cancel"
+          onSubmit={handleAddUserSubmit}
+          onClose={handleOnCloseAddUserModal}
+        >
+          <div>Add form content goes here</div>
         </CommonBoxForm>
       </Modal>
     </>
