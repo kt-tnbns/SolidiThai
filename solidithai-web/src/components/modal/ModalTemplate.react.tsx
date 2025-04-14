@@ -29,7 +29,7 @@ export const ModalBoxTemplate = ({
       sx={{ overflowY: 'auto', backgroundColor: 'white' }}
       gap={gap}
       width={width}
-      top={150}
+      top={100}
       {...props}
     >
       {children}

@@ -32,7 +32,7 @@ export const UserTable = () => {
   } = useUserTable()
 
   const addUserButton = (
-    <Button onClick={handleAddUser} variant="contained" color="primary" size="large" sx={{ gap: 1 }}>
+    <Button onClick={handleAddUser} variant="contained" color="primary" size="large" sx={{ gap: 1 }} fullWidth>
       <FaPlus />
       <Typography variant="body1">Add User</Typography>
     </Button>

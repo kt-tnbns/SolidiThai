@@ -34,7 +34,11 @@ export const useUserTable = () => {
     }))
   }
 
-  const { data: users, isLoading, isFetching, refetch } = useGetUsers({ ...Object.fromEntries(searchParams) })
+  const searchParamsObject = Object.fromEntries(searchParams)
+
+  const { data: users, isLoading, isFetching, refetch } = useGetUsers({ ...searchParamsObject }, {
+    enabled: Object.keys(searchParamsObject).length > 0 
+  })
 
   const handleEdit = (user: User) => {
     setSelectedUser(user)

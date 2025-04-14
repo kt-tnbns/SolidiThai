@@ -3,6 +3,7 @@ import { LoginCredentials, User, AuthState } from "../types/auth"
 import { useReducer, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import { useLogin } from "../api/authApi"
+import { HttpStatusCode } from "axios"
 
 const useAuthProvider = () => {
   const navigate = useNavigate();
@@ -96,9 +97,13 @@ const useAuthProvider = () => {
       dispatch({ type: 'LOGIN_SUCCESS', payload: result });
       toast.success('Login successful');
       navigate('/user');
-    } catch (error) {
+    } catch (error: any) {
       dispatch({ type: 'LOGIN_FAILURE', error: (error as Error).message });
-      toast.error('Login failed: ' + (error as Error).message);
+      if (error.response.status === HttpStatusCode.BadRequest) {
+        toast.error('Invalid email or password');
+      } else {
+        toast.error('Login failed: ' + (error as Error).message);
+      }
     }
   };
 
