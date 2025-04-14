@@ -56,7 +56,6 @@ const DataTableToolbar: React.FC<DataTableToolbarPropType> = (props) => {
         <FormControl sx={{ minWidth: '10rem' }} fullWidth={isMobile}>
           <InputLabel id="per-page-options">Number of items</InputLabel>
           <Select<number>
-            labelId="per-page-options-label"
             id="per-page-options-select"
             value={rowsPerPage}
             data-testid="per-page-options"

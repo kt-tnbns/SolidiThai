@@ -40,4 +40,7 @@ export const theme = createTheme({
       },
     },
   },
+  typography: {
+    fontFamily: 'Rubik',
+  },
 }) 

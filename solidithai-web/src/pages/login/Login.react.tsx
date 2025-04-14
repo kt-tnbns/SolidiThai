@@ -4,20 +4,17 @@ import { LoginForm } from './LoginForm.react'
 export const LoginPage = () => {
   return (
     <Box
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        height: '100%',
-        width: '100%',
-        background: '#F1EFEC'
-      }}
+      display="flex"
+      justifyContent="center"
+      alignItems="center"
+      height="100vh"
+      width="100vw"
+      bgcolor="#F1EFEC"
     >
       <Paper
         elevation={3}
         sx={{
-          padding: 4,
+          padding: 5,
           width: '90%',
           maxWidth: '400px',
           borderRadius: 2,

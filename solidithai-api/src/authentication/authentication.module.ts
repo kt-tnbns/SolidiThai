@@ -4,6 +4,7 @@ import { JwtModule } from '@nestjs/jwt'
 import { JwtAuthGuard } from 'src/authentication/guards/jwt.auth.guard'
 import { PrismaModule } from 'src/services/prisma/prisma.module'
 import { JwtStrategy } from './strategies/jwt.strategy'
+import { PrismaService } from 'src/services/prisma/prisma.service'
 
 @Module({
   imports: [
@@ -14,14 +15,14 @@ import { JwtStrategy } from './strategies/jwt.strategy'
           global: true,
           secret: configService.get<string>('JWT_SECRET'),
           signOptions: {
-            expiresIn: configService.get<number>('TOKEN_DURATION') * 1000,
+            expiresIn: Number(configService.get<string>('TOKEN_DURATION')),
           },
         }
       },
       inject: [ConfigService],
     }),
   ],
-  providers: [JwtAuthGuard, JwtStrategy],
+  providers: [JwtAuthGuard, JwtStrategy, PrismaService],
   exports: [JwtAuthGuard, JwtModule],
 })
 export class AuthenticationModule {}

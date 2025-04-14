@@ -1,5 +1,11 @@
-
 * {
-  font-family: 'Sarabun', sans-serif;
+  font-family: "Rubik", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: weight;
+  font-style: normal;
 }
 
+
+body {
+  margin:0;
+}

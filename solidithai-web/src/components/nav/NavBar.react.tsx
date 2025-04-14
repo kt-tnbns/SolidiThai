@@ -1,4 +1,4 @@
-import { AppBar, Toolbar, Typography, Button, IconButton, Menu, MenuItem, Stack, Divider, Box } from '@mui/material'
+import { AppBar, Toolbar, Typography, Button, IconButton, Menu, MenuItem, Stack, Divider } from '@mui/material'
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext.react'
@@ -32,13 +32,9 @@ export const NavBar = () => {
     isAuthenticated && (
       <AppBar position="static">
         <Toolbar>
-          <Box sx={{ flexGrow: 1 }}>
-            <Link to="/user" style={{ textDecoration: 'none', color: 'inherit' }}>
-              <Typography variant="subtitle1" component="div" sx={{ flexGrow: 1 }}>
-                SolidiThai User Management
-              </Typography>
-            </Link>
-          </Box>
+          <Typography variant="subtitle1" component="div" sx={{ flexGrow: 1 }}>
+            SolidiThai User Management
+          </Typography>
 
           <Stack direction="row" gap={2} pr={4}>
             <Link to="/user" style={{ textDecoration: 'none', color: 'inherit' }}>
